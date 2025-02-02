@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/todo_list.dart';
+import 'package:todo_list/tasks_list.dart';
 
 void main() {
   runApp(
     MaterialApp(
-      home: TodoList(),
+      home: TasksList(),
     ),
   );
 }
