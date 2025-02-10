@@ -1,8 +1,8 @@
-class Tasks {
+class Task {
   final String taskTitle;
   bool isCompleted;
 
-  Tasks({
+  Task({
     required this.isCompleted,
     required this.taskTitle,
   });

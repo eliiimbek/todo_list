@@ -3,7 +3,7 @@ import 'package:todo_list/widgets/task_card.dart';
 import '../models/task.dart';
 
 class TasksScreen extends StatelessWidget {
-  final List<Tasks> tasks;
+  final List<Task> tasks;
   const TasksScreen({super.key, required this.tasks});
 
   @override
@@ -11,7 +11,7 @@ class TasksScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
-        children: tasks.map((tasks) => TaskCard(tasks: tasks)).toList(),
+        children: tasks.map((tasks) => TaskCard(task: tasks)).toList(),
       ),
     );
   }

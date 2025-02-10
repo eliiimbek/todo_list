@@ -11,17 +11,25 @@ class TasksList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TasksList> {
-  List<Tasks> tasks = [
-    Tasks(taskTitle: 'Пойти на саппорт', isCompleted: false),
-    Tasks(taskTitle: 'Купить хлеб', isCompleted: false),
-    Tasks(taskTitle: 'Стать узбеком', isCompleted: false),
-    Tasks(taskTitle: 'Приготовить плов', isCompleted: false),
+  List<Task> tasks = [
+    Task(taskTitle: 'Пойти на саппорт', isCompleted: false),
+    Task(taskTitle: 'Купить хлеб', isCompleted: false),
+    Task(taskTitle: 'Стать узбеком', isCompleted: false),
+    Task(taskTitle: 'Приготовить плов', isCompleted: false),
   ];
+
+  void addTask(Task addTask) {
+    setState(() {
+      tasks.add(addTask);
+    });
+  }
 
   void addTaskSheet() {
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => AddTask(),
+      builder: (ctx) => AddTask(
+        onTaskCreated: addTask,
+      ),
     );
   }
 

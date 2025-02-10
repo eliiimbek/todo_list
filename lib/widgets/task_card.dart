@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:todo_list/models/task.dart';
 
 class TaskCard extends StatelessWidget {
-  final Tasks tasks;
-  const TaskCard({super.key, required this.tasks});
+  final Task task;
+  const TaskCard({super.key, required this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class TaskCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              tasks.taskTitle,
+              task.taskTitle,
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),

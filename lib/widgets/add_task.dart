@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/models/task.dart';
 
 class AddTask extends StatefulWidget {
-  const AddTask({super.key});
+  final void Function(Task newTask) onTaskCreated;
+  const AddTask({super.key, required this.onTaskCreated});
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -9,6 +11,16 @@ class AddTask extends StatefulWidget {
 
 class _AddTaskState extends State<AddTask> {
   var title = '';
+
+  void onCanceled() {
+    Navigator.pop(context);
+  }
+
+  void onAdd() {
+    final newTodo = Task(taskTitle: title, isCompleted: false);
+    widget.onTaskCreated(newTodo);
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +47,14 @@ class _AddTaskState extends State<AddTask> {
             children: [
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: onAdd,
                   child: Text('Add'),
                 ),
               ),
               SizedBox(width: 16),
               Expanded(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: onCanceled,
                   child: Text('Cancel'),
                 ),
               ),
