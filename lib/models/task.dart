@@ -1,9 +1,9 @@
 class Tasks {
   final String taskTitle;
-  final bool isCompleted;
+  bool isCompleted;
 
   Tasks({
-    this.isCompleted = false,
+    required this.isCompleted,
     required this.taskTitle,
   });
 }
