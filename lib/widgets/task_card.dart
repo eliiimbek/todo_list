@@ -3,10 +3,18 @@ import 'package:todo_list/models/task.dart';
 
 class TaskCard extends StatelessWidget {
   final Task task;
-  const TaskCard({super.key, required this.task});
+  final void Function() deleteTask;
+  final void Function() taskDone;
+  const TaskCard({
+    super.key,
+    required this.task,
+    required this.deleteTask,
+    required this.taskDone,
+  });
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).textTheme.titleMedium;
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -20,19 +28,26 @@ class TaskCard extends StatelessWidget {
           children: [
             Text(
               task.taskTitle,
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: !task.isCompleted
+                  ? theme
+                  : theme!.copyWith(
+                      color: Colors.grey.shade500,
+                      decoration: TextDecoration.lineThrough,
+                    ),
             ),
             Row(
               children: [
                 IconButton(
                   color: Colors.blueAccent,
-                  icon: Icon(Icons.check_circle),
-                  onPressed: () {},
+                  icon: Icon(
+                    task.isCompleted
+                        ? Icons.check_circle
+                        : Icons.check_circle_outline,
+                  ),
+                  onPressed: taskDone,
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: deleteTask,
                   icon: Icon(Icons.delete_forever_outlined),
                   color: Colors.blueAccent,
                 ),

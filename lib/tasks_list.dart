@@ -14,9 +14,21 @@ class _TodoListState extends State<TasksList> {
   List<Task> tasks = [
     Task(taskTitle: 'Пойти на саппорт', isCompleted: false),
     Task(taskTitle: 'Купить хлеб', isCompleted: false),
-    Task(taskTitle: 'Стать узбеком', isCompleted: false),
-    Task(taskTitle: 'Приготовить плов', isCompleted: false),
+    Task(taskTitle: 'Посмотреть сериал', isCompleted: false),
+    Task(taskTitle: 'Принять ванну', isCompleted: false),
   ];
+
+  void removeTask(Task task) {
+    setState(() {
+      tasks.remove(task);
+    });
+  }
+
+  void taskComplete(Task task) {
+    setState(() {
+      task.isCompleted = !task.isCompleted;
+    });
+  }
 
   void addTask(Task addTask) {
     setState(() {
@@ -35,15 +47,16 @@ class _TodoListState extends State<TasksList> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
+    final titleLargeStyle = theme.textTheme.titleLarge!;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
         title: Text(
           'Tasks',
-          style: theme.titleLarge!.copyWith(
-            color: Colors.white,
+          style: titleLargeStyle.copyWith(
             fontWeight: FontWeight.bold,
+            color: theme.colorScheme.onPrimary,
           ),
         ),
         actions: [
@@ -59,7 +72,11 @@ class _TodoListState extends State<TasksList> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 20),
-        child: TasksScreen(tasks: tasks),
+        child: TasksScreen(
+          tasks: tasks,
+          deleteTask: removeTask,
+          taskDone: taskComplete,
+        ),
       ),
     );
   }

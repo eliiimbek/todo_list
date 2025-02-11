@@ -19,15 +19,16 @@ class _AddTaskState extends State<AddTask> {
   void onAdd() {
     final newTodo = Task(taskTitle: title, isCompleted: false);
     widget.onTaskCreated(newTodo);
-    Navigator.pop(context);
+    onCanceled();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(20),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Row(
             children: [

@@ -4,14 +4,29 @@ import '../models/task.dart';
 
 class TasksScreen extends StatelessWidget {
   final List<Task> tasks;
-  const TasksScreen({super.key, required this.tasks});
+  final void Function(Task) deleteTask;
+  final void Function(Task) taskDone;
+  const TasksScreen({
+    super.key,
+    required this.tasks,
+    required this.deleteTask,
+    required this.taskDone,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
-        children: tasks.map((tasks) => TaskCard(task: tasks)).toList(),
+        children: tasks
+            .map(
+              (tasks) => TaskCard(
+                task: tasks,
+                deleteTask: () => deleteTask(tasks),
+                taskDone: () => taskDone(tasks),
+              ),
+            )
+            .toList(),
       ),
     );
   }
