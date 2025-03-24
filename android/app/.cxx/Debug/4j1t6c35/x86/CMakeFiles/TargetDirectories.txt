@@ -1,0 +1,2 @@
+/Users/elimbekksymbekov/fl_projects/todo_list/android/app/.cxx/Debug/4j1t6c35/x86/CMakeFiles/edit_cache.dir
+/Users/elimbekksymbekov/fl_projects/todo_list/android/app/.cxx/Debug/4j1t6c35/x86/CMakeFiles/rebuild_cache.dir
