@@ -17,7 +17,12 @@ class _AddTaskState extends State<AddTask> {
   }
 
   void onAdd() {
-    final newTodo = Task(taskTitle: title, isCompleted: false);
+    final newTodo = Task(
+      taskTitle: title,
+      isCompleted: false,
+      deadLineTime: null,
+      completeTime: null,
+    );
     widget.onTaskCreated(newTodo);
     onCanceled();
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/halpers/format_datetime.dart';
 import 'package:todo_list/models/task.dart';
 
 class TaskCard extends StatelessWidget {
@@ -22,18 +23,24 @@ class TaskCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              task.taskTitle,
-              style: !task.isCompleted
-                  ? theme
-                  : theme!.copyWith(
-                      color: Colors.grey.shade500,
-                      decoration: TextDecoration.lineThrough,
-                    ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  task.taskTitle,
+                  style: !task.isCompleted
+                      ? theme
+                      : theme!.copyWith(
+                          color: Colors.grey.shade500,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                ),
+                Text(formatDateTime(task.completeTime!)),
+              ],
             ),
             Row(
               children: [

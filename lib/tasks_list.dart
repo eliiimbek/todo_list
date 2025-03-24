@@ -12,10 +12,30 @@ class TasksList extends StatefulWidget {
 
 class _TodoListState extends State<TasksList> {
   List<Task> tasks = [
-    Task(taskTitle: 'Пойти на саппорт', isCompleted: false),
-    Task(taskTitle: 'Купить хлеб', isCompleted: false),
-    Task(taskTitle: 'Посмотреть сериал', isCompleted: false),
-    Task(taskTitle: 'Принять ванну', isCompleted: false),
+    Task(
+      taskTitle: 'Пойти на саппорт',
+      isCompleted: false,
+      deadLineTime: null,
+      completeTime: DateTime.now(),
+    ),
+    Task(
+      taskTitle: 'Купить хлеб',
+      isCompleted: false,
+      deadLineTime: null,
+      completeTime: DateTime.now(),
+    ),
+    Task(
+      taskTitle: 'Посмотреть сериал',
+      isCompleted: false,
+      deadLineTime: null,
+      completeTime: DateTime.now(),
+    ),
+    Task(
+      taskTitle: 'Принять ванну',
+      isCompleted: false,
+      deadLineTime: null,
+      completeTime: DateTime.now(),
+    ),
   ];
 
   void removeTask(Task task) {
