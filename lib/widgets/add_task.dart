@@ -22,6 +22,7 @@ class _AddTaskState extends State<AddTask> {
       isCompleted: false,
       deadLineTime: null,
       completeTime: null,
+      isCompleteInTime: false,
     );
     widget.onTaskCreated(newTodo);
     onCanceled();

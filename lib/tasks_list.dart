@@ -15,26 +15,30 @@ class _TodoListState extends State<TasksList> {
     Task(
       taskTitle: 'Пойти на саппорт',
       isCompleted: false,
-      deadLineTime: null,
+      deadLineTime: DateTime(2025, 2, 5, 13, 30),
       completeTime: DateTime.now(),
+      isCompleteInTime: false,
     ),
     Task(
       taskTitle: 'Купить хлеб',
       isCompleted: false,
-      deadLineTime: null,
+      deadLineTime: DateTime(2025, 5, 6, 12, 5),
       completeTime: DateTime.now(),
+      isCompleteInTime: false,
     ),
     Task(
       taskTitle: 'Посмотреть сериал',
       isCompleted: false,
-      deadLineTime: null,
+      deadLineTime: DateTime(2025, 3, 6, 20, 30),
       completeTime: DateTime.now(),
+      isCompleteInTime: false,
     ),
     Task(
       taskTitle: 'Принять ванну',
       isCompleted: false,
-      deadLineTime: null,
+      deadLineTime: DateTime(2025, 3, 25, 21, 31),
       completeTime: DateTime.now(),
+      isCompleteInTime: false,
     ),
   ];
 
@@ -54,6 +58,17 @@ class _TodoListState extends State<TasksList> {
     setState(() {
       tasks.add(addTask);
     });
+  }
+
+  void checkDeadLine(Task task) {
+    if (task.deadLineTime != null && task.completeTime != null) {
+      setState(() {
+        task.isCompleteInTime =
+            task.completeTime!.compareTo(task.deadLineTime!) <= 0;
+      });
+    } else {
+      task.isCompleteInTime = false;
+    }
   }
 
   void addTaskSheet() {
@@ -96,6 +111,7 @@ class _TodoListState extends State<TasksList> {
           tasks: tasks,
           deleteTask: removeTask,
           taskDone: taskComplete,
+          checkDeadLine: checkDeadLine,
         ),
       ),
     );

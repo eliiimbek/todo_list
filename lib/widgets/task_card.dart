@@ -6,16 +6,21 @@ class TaskCard extends StatelessWidget {
   final Task task;
   final void Function() deleteTask;
   final void Function() taskDone;
+  final void Function() checkDeadLine;
+  final bool isCompleteInTime;
   const TaskCard({
     super.key,
     required this.task,
     required this.deleteTask,
     required this.taskDone,
+    required this.isCompleteInTime,
+    required this.checkDeadLine,
   });
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context).textTheme.titleMedium;
+    var theme = Theme.of(context);
+    var titleMediumStyle = theme.textTheme.titleMedium!;
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -33,25 +38,37 @@ class TaskCard extends StatelessWidget {
                 Text(
                   task.taskTitle,
                   style: !task.isCompleted
-                      ? theme
-                      : theme!.copyWith(
+                      ? titleMediumStyle
+                      : titleMediumStyle.copyWith(
                           color: Colors.grey.shade500,
                           decoration: TextDecoration.lineThrough,
                         ),
                 ),
-                Text(formatDateTime(task.completeTime!)),
+                Text(
+                  formatDateTime(task.deadLineTime!),
+                  style: titleMediumStyle.copyWith(
+                    color: task.isCompleted
+                        ? (task.isCompleteInTime
+                            ? Colors.green.shade700
+                            : Colors.red.shade700)
+                        : Colors.grey.shade500,
+                  ),
+                ),
               ],
             ),
             Row(
               children: [
                 IconButton(
                   color: Colors.blueAccent,
+                  onPressed: () {
+                    taskDone();
+                    checkDeadLine();
+                  },
                   icon: Icon(
                     task.isCompleted
                         ? Icons.check_circle
                         : Icons.check_circle_outline,
                   ),
-                  onPressed: taskDone,
                 ),
                 IconButton(
                   onPressed: deleteTask,

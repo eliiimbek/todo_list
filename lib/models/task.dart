@@ -3,11 +3,13 @@ class Task {
   bool isCompleted;
   DateTime? deadLineTime;
   DateTime? completeTime;
+  bool isCompleteInTime;
 
   Task({
     required this.isCompleted,
     required this.taskTitle,
-    required this.deadLineTime,
+    this.deadLineTime,
     required this.completeTime,
+    required this.isCompleteInTime,
   });
 }
