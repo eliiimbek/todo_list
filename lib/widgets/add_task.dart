@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/halpers/format_datetime.dart';
 import 'package:todo_list/models/task.dart';
 
 class AddTask extends StatefulWidget {
@@ -11,17 +12,71 @@ class AddTask extends StatefulWidget {
 
 class _AddTaskState extends State<AddTask> {
   var title = '';
+  var selectedDate = DateTime.now();
+  var selectedTimeOfDay = TimeOfDay.now();
+
+  final dateController = TextEditingController();
+  final timeController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    dateController.text = formatDate(selectedDate);
+    timeController.text = formatTime(selectedTimeOfDay);
+  }
 
   void onCanceled() {
     Navigator.pop(context);
   }
 
+  void onDateTap() async {
+    final now = DateTime.now();
+    final firstDate = DateTime(now.year, now.month, now.day);
+    final lastDate = DateTime(now.year + 1, now.month, now.day);
+
+    final dateFromUser = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: firstDate,
+      lastDate: lastDate,
+    );
+
+    if (dateFromUser != null) {
+      setState(() {
+        selectedDate = dateFromUser;
+        dateController.text = formatDate(dateFromUser);
+      });
+    }
+  }
+
+  void onTimeTap() async {
+    final pickedTime = await showTimePicker(
+      context: context,
+      initialTime: selectedTimeOfDay,
+    );
+
+    if (pickedTime != null) {
+      setState(() {
+        selectedTimeOfDay = pickedTime;
+        timeController.text = formatTime(pickedTime);
+      });
+    }
+  }
+
   void onAdd() {
+    final dateTime = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      selectedTimeOfDay.hour,
+      selectedTimeOfDay.minute,
+    );
+
     final newTodo = Task(
       taskTitle: title,
       isCompleted: false,
-      deadLineTime: null,
-      completeTime: null,
+      deadLineTime: dateTime,
+      completeTime: DateTime.now(),
       isCompleteInTime: false,
     );
     widget.onTaskCreated(newTodo);
@@ -46,6 +101,33 @@ class _AddTaskState extends State<AddTask> {
                   }),
                 ),
               )
+            ],
+          ),
+          SizedBox(height: 20),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  onTap: onDateTap,
+                  controller: dateController,
+                  readOnly: true,
+                  decoration: InputDecoration(
+                    label: Text('Date'),
+                  ),
+                ),
+              ),
+              SizedBox(width: 16),
+              SizedBox(
+                width: 100,
+                child: TextField(
+                  onTap: onTimeTap,
+                  readOnly: true,
+                  controller: timeController,
+                  decoration: InputDecoration(
+                    label: Text('Time'),
+                  ),
+                ),
+              ),
             ],
           ),
           SizedBox(height: 20),
