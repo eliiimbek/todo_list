@@ -6,11 +6,13 @@ class TasksScreen extends StatelessWidget {
   final List<Task> tasks;
   final void Function(Task) deleteTask;
   final void Function(Task) taskDone;
+  final void Function(Task) checkDeadLine;
   const TasksScreen({
     super.key,
     required this.tasks,
     required this.deleteTask,
     required this.taskDone,
+    required this.checkDeadLine,
   });
 
   @override
@@ -24,6 +26,8 @@ class TasksScreen extends StatelessWidget {
                 task: tasks,
                 deleteTask: () => deleteTask(tasks),
                 taskDone: () => taskDone(tasks),
+                isCompleteInTime: tasks.isCompleteInTime,
+                checkDeadLine: () => checkDeadLine(tasks),
               ),
             )
             .toList(),
