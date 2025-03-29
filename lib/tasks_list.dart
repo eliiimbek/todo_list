@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/data/categories_data.dart';
 import 'package:todo_list/models/task.dart';
 import 'package:todo_list/screens/tasks_screen.dart';
 import 'package:todo_list/widgets/add_task.dart';
@@ -11,6 +12,8 @@ class TasksList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TasksList> {
+  String? allTasks = 'all_tasks';
+
   List<Task> tasks = [
     Task(
       taskTitle: 'Go to support',
@@ -96,8 +99,10 @@ class _TodoListState extends State<TasksList> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final titleLargeStyle = theme.textTheme.titleLarge!;
+
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 80,
         backgroundColor: Colors.blueAccent,
         title: Text(
           'Tasks',
@@ -107,6 +112,20 @@ class _TodoListState extends State<TasksList> {
           ),
         ),
         actions: [
+          DropdownMenu(
+            initialSelection: allTasks,
+            label: Text('Category'),
+            onSelected: (value) => setState(() => allTasks = value),
+            dropdownMenuEntries: categories
+                .map(
+                  (category) => DropdownMenuEntry(
+                    value: category.id,
+                    label: category.categoryTitle,
+                    leadingIcon: Icon(category.icon),
+                  ),
+                )
+                .toList(),
+          ),
           IconButton(
             onPressed: addTaskSheet,
             icon: Icon(
@@ -120,7 +139,9 @@ class _TodoListState extends State<TasksList> {
       body: Padding(
         padding: const EdgeInsets.only(top: 20),
         child: TasksScreen(
-          tasks: tasks,
+          tasks: (allTasks == 'all_tasks')
+              ? tasks
+              : tasks.where((task) => task.categoryId == allTasks).toList(),
           deleteTask: removeTask,
           taskDone: taskComplete,
           checkDeadLine: checkDeadLine,

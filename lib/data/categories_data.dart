@@ -3,6 +3,11 @@ import 'package:todo_list/models/task_category.dart';
 
 final categories = [
   TaskCategory(
+    id: 'all_tasks',
+    categoryTitle: 'All tasks',
+    icon: Icons.list_alt_outlined,
+  ),
+  TaskCategory(
     id: 'work',
     categoryTitle: 'Work',
     icon: Icons.monetization_on_outlined,

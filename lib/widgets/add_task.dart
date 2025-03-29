@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/data/categories_data.dart';
 import 'package:todo_list/models/task.dart';
 import '../helpers/format_datetime.dart';
 
@@ -14,6 +15,7 @@ class _AddTaskState extends State<AddTask> {
   var title = '';
   var selectedDate = DateTime.now();
   var selectedTimeOfDay = TimeOfDay.now();
+  String? selectedCategory;
 
   final dateController = TextEditingController();
   final timeController = TextEditingController();
@@ -64,6 +66,10 @@ class _AddTaskState extends State<AddTask> {
   }
 
   void onAdd() {
+    if (selectedCategory == null) {
+      return;
+    }
+
     final dateTime = DateTime(
       selectedDate.year,
       selectedDate.month,
@@ -78,7 +84,7 @@ class _AddTaskState extends State<AddTask> {
       deadLineTime: dateTime,
       completeTime: DateTime.now(),
       isCompleteInTime: false,
-      categoryId: 'work',
+      categoryId: selectedCategory!,
     );
     widget.onTaskCreated(newTodo);
     onCanceled();
@@ -120,6 +126,19 @@ class _AddTaskState extends State<AddTask> {
                 ),
               )
             ],
+          ),
+          SizedBox(height: 20),
+          DropdownMenu(
+            inputDecorationTheme: theme.inputDecorationTheme,
+            expandedInsets: EdgeInsets.zero,
+            label: Text('Category'),
+            onSelected: (value) => setState(() => selectedCategory = value),
+            dropdownMenuEntries: categories
+                .map((category) => DropdownMenuEntry(
+                    value: category.id,
+                    label: category.categoryTitle,
+                    leadingIcon: Icon(category.icon)))
+                .toList(),
           ),
           SizedBox(height: 20),
           Row(
@@ -205,7 +224,7 @@ class _AddTaskState extends State<AddTask> {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );
