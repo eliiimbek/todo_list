@@ -88,6 +88,8 @@ class _TodoListState extends State<TasksList> {
 
   void addTaskSheet() {
     showModalBottomSheet(
+      useSafeArea: true,
+      isScrollControlled: true,
       context: context,
       builder: (ctx) => AddTask(
         onTaskCreated: addTask,

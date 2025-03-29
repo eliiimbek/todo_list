@@ -27,6 +27,13 @@ class _AddTaskState extends State<AddTask> {
     timeController.text = formatTime(selectedTimeOfDay);
   }
 
+  @override
+  void dispose() {
+    timeController.dispose();
+    dateController.dispose();
+    super.dispose();
+  }
+
   void onDateTap() async {
     final now = DateTime.now();
     final firstDate = DateTime(now.year, now.month, now.day);
@@ -92,140 +99,143 @@ class _AddTaskState extends State<AddTask> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
     var theme = Theme.of(context);
     var titleSmallStyle = theme.textTheme.titleSmall!;
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.blueAccent, width: 3.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.blueAccent, width: 3.0),
-                    ),
-                    label: Text(
-                      'New task',
-                      style: titleSmallStyle.copyWith(
-                        color: Color.fromRGBO(28, 28, 28, 100),
+      padding: EdgeInsets.fromLTRB(16, 16, 16, bottomInset + 16),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.blueAccent, width: 3.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.blueAccent, width: 3.0),
+                      ),
+                      label: Text(
+                        'New task',
+                        style: titleSmallStyle.copyWith(
+                          color: Color.fromRGBO(28, 28, 28, 100),
+                        ),
                       ),
                     ),
+                    onChanged: (value) => setState(() {
+                      title = value;
+                    }),
                   ),
-                  onChanged: (value) => setState(() {
-                    title = value;
-                  }),
-                ),
-              )
-            ],
-          ),
-          SizedBox(height: 20),
-          DropdownMenu(
-            inputDecorationTheme: theme.inputDecorationTheme,
-            expandedInsets: EdgeInsets.zero,
-            label: Text('Category'),
-            onSelected: (value) => setState(() => selectedCategory = value),
-            dropdownMenuEntries: categories
-                .map((category) => DropdownMenuEntry(
-                    value: category.id,
-                    label: category.categoryTitle,
-                    leadingIcon: Icon(category.icon)))
-                .toList(),
-          ),
-          SizedBox(height: 20),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  onTap: onDateTap,
-                  controller: dateController,
-                  readOnly: true,
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.blueAccent, width: 3.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.blueAccent, width: 3.0),
-                    ),
-                    label: Text(
-                      'Date',
-                      style: titleSmallStyle.copyWith(
-                        color: Color.fromRGBO(28, 28, 28, 100),
+                )
+              ],
+            ),
+            SizedBox(height: 20),
+            DropdownMenu(
+              inputDecorationTheme: theme.inputDecorationTheme,
+              expandedInsets: EdgeInsets.zero,
+              label: Text('Category'),
+              onSelected: (value) => setState(() => selectedCategory = value),
+              dropdownMenuEntries: categories
+                  .map((category) => DropdownMenuEntry(
+                      value: category.id,
+                      label: category.categoryTitle,
+                      leadingIcon: Icon(category.icon)))
+                  .toList(),
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    onTap: onDateTap,
+                    controller: dateController,
+                    readOnly: true,
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.blueAccent, width: 3.0),
                       ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(width: 16),
-              SizedBox(
-                width: 100,
-                child: TextField(
-                  onTap: onTimeTap,
-                  readOnly: true,
-                  controller: timeController,
-                  decoration: InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.blueAccent, width: 3.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.blueAccent, width: 3.0),
-                    ),
-                    label: Text(
-                      'Time',
-                      style: titleSmallStyle.copyWith(
-                        color: Color.fromRGBO(28, 28, 28, 100),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.blueAccent, width: 3.0),
+                      ),
+                      label: Text(
+                        'Date',
+                        style: titleSmallStyle.copyWith(
+                          color: Color.fromRGBO(28, 28, 28, 100),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: onAdd,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
-                  ),
-                  child: Text(
-                    'Add',
-                    style: titleSmallStyle.copyWith(
-                      color: Colors.white,
+                SizedBox(width: 16),
+                SizedBox(
+                  width: 100,
+                  child: TextField(
+                    onTap: onTimeTap,
+                    readOnly: true,
+                    controller: timeController,
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.blueAccent, width: 3.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.blueAccent, width: 3.0),
+                      ),
+                      label: Text(
+                        'Time',
+                        style: titleSmallStyle.copyWith(
+                          color: Color.fromRGBO(28, 28, 28, 100),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(width: 16),
-              Expanded(
-                child: TextButton(
-                  onPressed: onCanceled,
-                  child: Text(
-                    'Cancel',
-                    style: titleSmallStyle.copyWith(
-                      color: Colors.blueAccent,
+              ],
+            ),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: onAdd,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                    ),
+                    child: Text(
+                      'Add',
+                      style: titleSmallStyle.copyWith(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+                SizedBox(width: 16),
+                Expanded(
+                  child: TextButton(
+                    onPressed: onCanceled,
+                    child: Text(
+                      'Cancel',
+                      style: titleSmallStyle.copyWith(
+                        color: Colors.blueAccent,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
