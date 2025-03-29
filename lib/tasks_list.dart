@@ -13,32 +13,44 @@ class TasksList extends StatefulWidget {
 class _TodoListState extends State<TasksList> {
   List<Task> tasks = [
     Task(
-      taskTitle: 'Пойти на саппорт',
+      taskTitle: 'Go to support',
       isCompleted: false,
       deadLineTime: DateTime(2025, 2, 5, 13, 30),
       completeTime: DateTime.now(),
       isCompleteInTime: false,
+      categoryId: 'study',
     ),
     Task(
-      taskTitle: 'Купить хлеб',
+      taskTitle: 'Buy bread',
       isCompleted: false,
       deadLineTime: DateTime(2025, 5, 6, 12, 5),
       completeTime: DateTime.now(),
       isCompleteInTime: false,
+      categoryId: 'purchases',
     ),
     Task(
-      taskTitle: 'Посмотреть сериал',
+      taskTitle: 'Made logo',
       isCompleted: false,
       deadLineTime: DateTime(2025, 3, 6, 20, 30),
       completeTime: DateTime.now(),
       isCompleteInTime: false,
+      categoryId: 'work',
     ),
     Task(
-      taskTitle: 'Принять ванну',
+      taskTitle: 'Watch the movie',
       isCompleted: false,
       deadLineTime: DateTime(2025, 3, 25, 21, 31),
       completeTime: DateTime.now(),
       isCompleteInTime: false,
+      categoryId: 'entertainment',
+    ),
+    Task(
+      taskTitle: 'Go to basketball',
+      isCompleted: false,
+      deadLineTime: DateTime(2025, 3, 25, 21, 31),
+      completeTime: DateTime.now(),
+      isCompleteInTime: false,
+      categoryId: 'workout',
     ),
   ];
 

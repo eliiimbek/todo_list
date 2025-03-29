@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:todo_list/models/task.dart';
 
 import '../helpers/format_datetime.dart';
@@ -21,8 +22,11 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final category = task.category;
     var theme = Theme.of(context);
+    var titleSmallStyle = theme.textTheme.titleSmall!;
     var titleMediumStyle = theme.textTheme.titleMedium!;
+    var titleLargeStyle = theme.textTheme.titleLarge!;
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -40,15 +44,31 @@ class TaskCard extends StatelessWidget {
                 Text(
                   task.taskTitle,
                   style: !task.isCompleted
-                      ? titleMediumStyle
-                      : titleMediumStyle.copyWith(
+                      ? titleLargeStyle
+                      : titleLargeStyle.copyWith(
                           color: Colors.grey.shade500,
                           decoration: TextDecoration.lineThrough,
                         ),
                 ),
+                SizedBox(height: 5),
+                Row(
+                  children: [
+                    Icon(
+                      category.icon,
+                      color: Colors.blueAccent.shade700,
+                      size: 20,
+                    ),
+                    SizedBox(width: 4),
+                    Text(
+                      category.categoryTitle,
+                      style: titleMediumStyle,
+                    )
+                  ],
+                ),
+                SizedBox(height: 5),
                 Text(
                   formatDateTime(task.deadLineTime!),
-                  style: titleMediumStyle.copyWith(
+                  style: titleSmallStyle.copyWith(
                     color: task.isCompleted
                         ? (task.isCompleteInTime
                             ? Colors.green.shade700
@@ -61,6 +81,7 @@ class TaskCard extends StatelessWidget {
             Row(
               children: [
                 IconButton(
+                  iconSize: 30,
                   color: Colors.blueAccent,
                   icon: Icon(
                     task.isCompleted
@@ -71,6 +92,7 @@ class TaskCard extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: deleteTask,
+                  iconSize: 30,
                   icon: Icon(Icons.delete_forever_outlined),
                   color: Colors.blueAccent,
                 ),
